@@ -8,3 +8,4 @@
 - Explicit intents; clear the back stack after login
 - Comment the code well; keep it simple (it is graded)
 - Run ./gradlew assembleDebug to verify before finishing
+- Firebase BoM 34 is used, so there are no -ktx libraries: use FirebaseAuth.getInstance() and FirebaseDatabase.getInstance(), not com.google.firebase.ktx imports. The database is in the Europe region, so always use the URL from google-services.json (Firebase picks it up automatically).
