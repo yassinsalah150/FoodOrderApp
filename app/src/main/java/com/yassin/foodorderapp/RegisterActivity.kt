@@ -30,8 +30,14 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.btnRegister.setOnClickListener { registerUser() }
 
-        // "Already have an account?" just closes this screen and returns to login
-        binding.tvLogin.setOnClickListener { finish() }
+        // "Already have an account?" goes back to LoginActivity. CLEAR_TOP reuses
+        // the existing login screen instead of stacking a second copy on top.
+        binding.tvLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+        }
     }
 
     /** Validates the form, then creates the account in Firebase Auth. */
@@ -59,11 +65,28 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    /** Saves the profile at /users/{uid}, then moves on to the home screen. */
+    /**
+     * Saves the profile at /users/{uid}, then moves on to the home screen.
+     * If the save fails, the new account is rolled back (see rollbackAccount).
+     */
     private fun saveUser(user: User) {
         database.getReference("users").child(user.uid).setValue(user)
             .addOnSuccessListener { openHome(user.role) }
-            .addOnFailureListener { e -> showError(e.message) }
+            .addOnFailureListener { rollbackAccount() }
+    }
+
+    /**
+     * Undoes a half-finished registration: the Auth account exists but its
+     * profile could not be saved. Deleting the account (and signing out) means
+     * no account is left without a role, so the user can simply register again.
+     */
+    private fun rollbackAccount() {
+        // Even if the delete fails, we still sign out so the app does not
+        // treat this role-less account as logged in.
+        auth.currentUser?.delete()?.addOnCompleteListener { auth.signOut() }
+            ?: auth.signOut()
+
+        showError("Could not save your profile. Please try again.")
     }
 
     /** Opens HomeActivity and clears the back stack so Back cannot return here. */

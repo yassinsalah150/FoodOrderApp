@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">FoodOrderApp</string>
 
+    <!-- Login screen -->
+    <string name="login_title">Log in</string>
+    <string name="hint_login_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="link_register">Create account</string>
+
     <!-- Register screen -->
     <string name="register_title">Create account</string>
     <string name="hint_name">Full name</string>
