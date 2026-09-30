@@ -23,6 +23,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Sign-up screen, opened from the login screen -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Home screen, opened after login or registration -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

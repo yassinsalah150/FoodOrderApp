@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">FoodOrderApp</string>
+
+    <!-- Register screen -->
+    <string name="register_title">Create account</string>
+    <string name="hint_name">Full name</string>
+    <string name="hint_phone">Phone number</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password (min 6 characters)</string>
+    <string name="role_buyer">Buyer</string>
+    <string name="role_seller">Seller</string>
+    <string name="btn_register">Register</string>
+    <string name="link_login">Already have an account? Log in</string>
+
+    <!-- Home screen -->
+    <string name="home_title">Home</string>
 </resources>
